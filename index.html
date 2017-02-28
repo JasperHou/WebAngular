@@ -1,142 +1,46 @@
 <!DOCTYPE html>
 
-<html ng-app="test">
+<html ng-app="fifaApp">
 
 <head>
-<title>AngularJs</title>
+<title>FIFA Teams</title>
 
-<style type="text/css">
-	.done {
-		background-color: green;
-	}
-	.pending {
-		background-color: red;
-	}
-</style>
+<link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="styles/main.css">
 
 </head>
 
-
 <body ng-controller="MainController as ctrl">
 
-<!-- Bind model -->
-<input type="text" ng-model=ctrl.name placeholder="Enter your name: ">
-<h1>Hello <span ng-bind=ctrl.userName></span></h1>
-
-<!-- Click event -->
-<button class="done" ng-click="ctrl.changeMessage()"> 
-	Change Message
-</button>
-
-<!--Array operation -->
-<div ng-repeat="student in ctrl.students" ng-class="ctrl.getBackStyleClass(student.backStyle)">
-	<ul>
-		<li>Student's name is: {{student.name}}</li>
-		<li>Score is: {{student.score}}</li>
-	</ul>
-</div>
-
-<input type="text" ng-model="ctrl.userName"> <br>
-<input type="password" ng-model="ctrl.password"> <br>
-<button ng-click="ctrl.submit()">Submit</button>
-<button ng-click="ctrl.cancel()">Cancel</button>
-
-<br> <br>
-<button ng-click="ctrl.open('first')">Open the first tab</button> <br>
-<button ng-click="ctrl.open('second')">Open the second tab</button> 
-
-
-<div ng-switch on="ctrl.tab">
-	<div ng-switch-when="first">
-		<div ng-controller="SubController as subCtrl">
-			<h3>First Tab</h3>
-			<ul>
-				<li ng-repeat="item in subCtrl.list">
-					<span>{{item.label}}</span>
-				</li>
-			</ul>	
-
-			<button ng-click="subCtrl.add()">Add more items</button>
-		</div>
+<div class="top_bar">
+	<div class="pull_left">
+		<span><a href="#/">FIFA TEAMS</a></span>
 	</div>
 
-	<div ng-switch-when="second">
-		<div ng-controller="SubController as subCtrl">
-			<h3>Second Tab</h3>
-			<ul>
-				<li ng-repeat="item in subCtrl.list">
-					<span>{{item.label}}</span>
-				</li>
-			</ul>	
-
-			<button ng-click="subCtrl.add()">Add more items</button>
-
-		</div>
+	<div class="pull_right">
+		<span ng-hide="mainCtrl.userService.isLoggedIn">
+			<a href="#/login">Login</a>
+		</span>
+		<br>
+		<span ng-show="mainCtrl.userService.isLoggedIn">
+			<a href="#/logout">Logout</a>
+		</span>
 
 	</div>
 </div>
 
+<br>
 
+<ng-view>
+</ng-view>
 
-<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"> </script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
-<script>
-angular.module('test', [])
-	.controller('MainController', [function() {
-		console.log("Main controller is created.");
-		var self = this;
-		self.name = "Jasper";// Data in the controller
-		self.tab = 'first';
-		this.changeMessage = function() { // Method in the controller
-			self.name = "God";
-		};
-
-		self.students = [  // Array
-			{id: 1, name: "Jasper", score: 80, backStyle: "done"},
-			{id: 2, name: "Jack", score: 90, backStyle: "done"}, 
-			{id: 3, name: "Susan", score: 100, backStyle: "pending"}, 
-			{id: 4, name: "Dick", score: 60, backStyle: "pending"}
-		];
-
-		self.getBackStyleClass = function(backStyle) {
-		};
-
-		//self.userName = "Jasper";
-		//self.password = "";
-		self.submit = function() {
-
-		};
-
-		self.cancel = function() {
-			self.userName = "";
-			self.password = "";
-		};
-
-		self.open = function(tabName) {
-			self.tab = tabName;
-		};
-
-
-
-
-	}])
-	.controller('SubController', [function() {
-		self = this;
-		self.list = [
-			{id: 1, label: 'Item 0'},
-			{id: 2, label: 'Item 1'}
-		];
-
-		self.add = function() {
-			self.list.push(
-				{id: self.list.length+1, label: 'Item ' + self.list.length}
-			);
-		};
-
-
-	}]);
-
-</script>
+<script src="scripts/app.js"></script>
+<script src="scripts/services.js"></script>
+<script src="scripts/controllers.js"></script>
 
 </body>
 </html>
